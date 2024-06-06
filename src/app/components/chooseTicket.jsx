@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 import TicketComponent2 from "./TicketComponent2";
 import TicketSelector from "./TicketSelector";
-import FetchCampingSpots from "./FetchCampingSpots";
 import GreenCamping from "./GreenCamping";
 import TentAddOn from "./TentAddOn";
 import { useSearchParams } from "next/navigation";
 
 const Chooseticket = ({ ticketType }) => {
+  // Initialize search params
   const searchParams = useSearchParams();
   const type = searchParams.get("type");
+  const reservationId = searchParams.get("reservationId");
+  const campingArea = searchParams.get("campingArea");
 
+  // Prices
   const regularPrice = 799;
   const vipPrice = 1299;
   const bookingFee = 99;
@@ -17,22 +20,18 @@ const Chooseticket = ({ ticketType }) => {
   const tent2PersonPrice = 299;
   const tent3PersonPrice = 399;
 
+  // State variables
   const [ticketAmount, setTicketAmount] = useState(1);
   const [isGreenCamping, setIsGreenCamping] = useState(false);
   const [isTent2Person, setIsTent2Person] = useState(false);
   const [isTent3Person, setIsTent3Person] = useState(false);
   const [warningMessage, setWarningMessage] = useState("");
   const [tentWarningMessage, setTentWarningMessage] = useState("");
-  const [reserveMessage, setReserveMessage] = useState("");
   const [formData, setFormData] = useState({
-    campingArea: "",
+    campingArea: campingArea || "",
   });
-  const [formSubmitted, setFormSubmitted] = useState(false);
-  const [reservationId, setReservationId] = useState(""); 
-  const [campingAreaSelected, setCampingAreaSelected] = useState(false); 
-  const [campingDivClicked, setcampingDivClicked] = useState(false); 
-  const [nextPageWarning, setNextPageWarning] = useState("");
 
+  // Calculate total price
   const calculateTotalPrice = () => {
     let totalPrice = 0;
 
@@ -49,6 +48,7 @@ const Chooseticket = ({ ticketType }) => {
     return totalPrice;
   };
 
+  // Handle ticket amount increment
   const handleIncrement = () => {
     if (ticketAmount < 5) {
       setTicketAmount((prevAmount) => {
@@ -66,6 +66,7 @@ const Chooseticket = ({ ticketType }) => {
     }
   };
 
+  // Handle ticket amount decrement
   const handleDecrement = () => {
     if (ticketAmount === 1) {
       return;
@@ -82,6 +83,7 @@ const Chooseticket = ({ ticketType }) => {
     });
   };
 
+  // Handle checkbox change for addons
   const handleCheckboxChange = (type, isChecked) => {
     switch (type) {
       case "greenCamping":
@@ -102,6 +104,7 @@ const Chooseticket = ({ ticketType }) => {
     }
   };
 
+  // Handle checkbox click for tent options
   const handleCheckboxClick = (type) => {
     switch (type) {
       case "tent2Person":
@@ -123,13 +126,8 @@ const Chooseticket = ({ ticketType }) => {
     }
   };
 
+  // Reset warning messages after 6 seconds
   useEffect(() => {
-    // Check if camping area is selected
-    setCampingAreaSelected(formData.campingArea !== "");
-  }, [formData.campingArea]);
-
-  useEffect(() => {
-    // Reset warning messages after 6 seconds
     const timer = setTimeout(() => {
       setWarningMessage("");
       setTentWarningMessage("");
@@ -138,71 +136,17 @@ const Chooseticket = ({ ticketType }) => {
     return () => clearTimeout(timer);
   }, [warningMessage, tentWarningMessage]);
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handlePutRequest = async () => {
-    if (!campingAreaSelected) {
-      setReserveMessage("Please select a camping area.");
-      return;
-    }
-
-    const reservationData = {
-      area: formData.campingArea,
-      amount: ticketAmount,
-    };
-
-    try {
-      const response = await fetch(
-        "https://abyssinian-aeolian-gazelle.glitch.me/reserve-spot",
-        {
-          method: "PUT",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(reservationData),
-        }
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        setReservationId(data.id);
-        setReserveMessage("Reservation successful!");
-        console.log("Reservation ID:", data.id);
-
-        setNextPageWarning("");
-
-        return data.id;
-      } else {
-        setReserveMessage("Reservation failed. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      setReserveMessage("Error occurred. Please try again.");
-    }
-  };
-
-  const handleClick = () => {
-    setcampingDivClicked(true);
-    if (campingAreaSelected) {
-      handlePutRequest();
-    }
-  };
-
+  // Handle next page click
   const handleNextPageClick = (event) => {
     if (!reservationId) {
       event.preventDefault();
-      setNextPageWarning("You must complete a reservation before proceeding.");
+      setWarningMessage("You must complete a reservation before proceeding.");
     }
   };
 
   return (
     <form action="/personal-info" method="GET">
+      {/* Hidden inputs to pass data to next page */}
       <input type="hidden" name="type" value={type} />
       <input type="hidden" name="ticketAmount" value={ticketAmount} />
       <input type="hidden" name="totalPrice" value={calculateTotalPrice()} />
@@ -210,6 +154,9 @@ const Chooseticket = ({ ticketType }) => {
       <input type="hidden" name="isTent2Person" value={isTent2Person} />
       <input type="hidden" name="isTent3Person" value={isTent3Person} />
       <input type="hidden" name="reservationId" value={reservationId} />
+      <input type="hidden" name="campingArea" value={formData.campingArea} />
+
+      {/* Ticket selection and pricing */}
       <article>
         <div className="flex justify-between bg-gray-100 rounded-lg p-3">
           <div>
@@ -229,69 +176,7 @@ const Chooseticket = ({ ticketType }) => {
           <div className="p-3 text-red-500">{warningMessage}</div>
         )}
 
-        <div className="p-3">
-          <h3>
-            <strong>Choose camping area</strong>
-          </h3>
-          <FetchCampingSpots>
-            {({ spots, error }) => (
-              <>
-                {error && <p>Error: {error}</p>}
-                <div className="grid grid-cols-4 gap-4">
-                  <h4>
-                    <strong>Select</strong>
-                  </h4>
-                  <h4>
-                    <strong>Areas</strong>
-                  </h4>
-                  <h4>
-                    <strong>Spots</strong>
-                  </h4>
-                  <h4>
-                    <strong>Available Spots</strong>
-                  </h4>
-                  {spots.map((spot, index) => (
-                    <React.Fragment key={index}>
-                      <div>
-                        <label htmlFor="campingArea"></label>
-                        <input
-                          type="radio"
-                          name="campingArea"
-                          value={spot.area}
-                          className="w-6 h-6"
-                          onChange={handleInputChange}
-                        />
-                      </div>
-                      {Object.values(spot).map((value, i) => (
-                        <span key={i}>{value}</span>
-                      ))}
-                    </React.Fragment>
-                  ))}
-                </div>
-              </>
-            )}
-          </FetchCampingSpots>
-        </div>
-
-        <div className="flex justify-center">
-          <div
-            onClick={handleClick}
-            className={`bg-green-500 text-white px-4 py-2 mt-7 mb-2 rounded-md ${
-              campingAreaSelected ? "cursor-pointer" : "opacity-50"
-            }`}
-          >
-            Reserve camping
-          </div>
-        </div>
-        {reserveMessage && (
-          <div className="p-3 text-green-500 text-center">{reserveMessage}</div>
-        )}
-        {campingDivClicked && !campingAreaSelected && !reserveMessage && (
-          <div className="text-red-500 text-center mt-1">
-            Select a camping area before making a reservation
-          </div>
-        )}
-
+        {/* Add-ons for green camping and tents */}
         <GreenCamping
           title="Green camping"
           description="Help save the planet"
@@ -326,6 +211,7 @@ const Chooseticket = ({ ticketType }) => {
           <div className="p-3 text-red-500">{tentWarningMessage}</div>
         )}
 
+        {/* Navigation to the next page */}
         <div className="flex flex-col items-center p-3 mb-8">
           <button
             type="submit"
@@ -334,9 +220,6 @@ const Chooseticket = ({ ticketType }) => {
           >
             Next Page
           </button>
-          {nextPageWarning && (
-            <div className="p-3 text-red-500 text-center">{nextPageWarning}</div>
-          )}
         </div>
       </article>
     </form>

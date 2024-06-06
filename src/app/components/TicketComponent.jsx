@@ -17,7 +17,7 @@ const TicketComponent = (props) => {
         <span className="text-gray-800 font-semibold">{props.price}</span>
       </div>
       <div className="flex justify-center">
-        <Link href={`./choose-ticket?type=${props.ticketType}`}>
+        <Link href={`./reserveCamping?type=${props.ticketType}`}>
           <BlueButton text="Buy ticket" />
         </Link>
       </div>
