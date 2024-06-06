@@ -9,7 +9,7 @@ const ReserveCamping = () => {
   const [ticketAmount, setTicketAmount] = useState(1); // This could be a default or passed from a previous step
   const [reserveMessage, setReserveMessage] = useState("");
   const [reservationId, setReservationId] = useState("");
-  const [campingAreaSelected, setCampingAreaSelected] = useState(false); 
+  const [campingAreaSelected, setCampingAreaSelected] = useState(false);
   const [campingDivClicked, setCampingDivClicked] = useState(false);
   const searchParams = useSearchParams();
 
@@ -81,33 +81,27 @@ const ReserveCamping = () => {
   };
 
   return (
-    <div>
-      <div className="p-3">
-        <h3>
-          <strong>Choose camping area</strong>
-        </h3>
+    <div className="container mx-auto p-4">
+             
+
+      <div className="p-3 bg-white rounded shadow-md">
+      <h1 className="text-2xl font-bold mb-6 mt-8">Reserve Camping</h1>
+        <h3 className="text-lg font-semibold mb-4">Choose camping area</h3>
         <FetchCampingSpots>
           {({ spots, error }) => (
             <>
-              {error && <p>Error: {error}</p>}
+              {error && <p className="text-red-500">Error: {error}</p>}
               <div className="grid grid-cols-4 gap-4">
-                <h4>
-                  <strong>Select</strong>
-                </h4>
-                <h4>
-                  <strong>Areas</strong>
-                </h4>
-                <h4>
-                  <strong>Spots</strong>
-                </h4>
-                <h4>
-                  <strong>Available Spots</strong>
-                </h4>
+                <h4 className="font-semibold">Select</h4>
+                <h4 className="font-semibold">Areas</h4>
+                <h4 className="font-semibold">Spots</h4>
+                <h4 className="font-semibold">Available Spots</h4>
                 {spots.map((spot, index) => (
                   <React.Fragment key={index}>
                     <div>
-                      <label htmlFor="campingArea"></label>
+                      <label htmlFor={`campingArea${index}`}></label>
                       <input
+                        id={`campingArea${index}`}
                         type="radio"
                         name="campingArea"
                         value={spot.area}
@@ -116,7 +110,7 @@ const ReserveCamping = () => {
                       />
                     </div>
                     {Object.values(spot).map((value, i) => (
-                      <span key={i}>{value}</span>
+                      <span key={i} className="p-1">{value}</span>
                     ))}
                   </React.Fragment>
                 ))}
@@ -124,26 +118,28 @@ const ReserveCamping = () => {
             </>
           )}
         </FetchCampingSpots>
-      </div>
+      
 
-      <div className="flex justify-center">
-        <div
+      <div className="flex justify-center mt-6">
+        <button
           onClick={handleClick}
-          className={`bg-green-500 text-white px-4 py-2 mt-7 mb-2 rounded-md ${
+          className={`bg-green-500 text-white px-4 py-2 rounded-md ${
             campingAreaSelected ? "cursor-pointer" : "opacity-50"
           }`}
+          disabled={!campingAreaSelected}
         >
           Reserve camping
-        </div>
+        </button>
       </div>
       {reserveMessage && (
-        <div className="p-3 text-green-500 text-center">{reserveMessage}</div>
+        <div className="p-3 text-green-500 text-center mt-4">{reserveMessage}</div>
       )}
       {campingDivClicked && !campingAreaSelected && !reserveMessage && (
-        <div className="text-red-500 text-center mt-1">
+        <div className="text-red-500 text-center mt-4">
           Select a camping area before making a reservation
         </div>
       )}
+    </div>
     </div>
   );
 };
