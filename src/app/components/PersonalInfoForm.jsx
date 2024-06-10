@@ -28,7 +28,7 @@ const PersonalInfo = () => {
     if (ticketAmount > 1) {
       for (let i = 0; i < ticketAmount - 1; i++) {
         inputs.push(
-          <div key={i} className="guest-section mb-8 p-4 border border-gray-200 rounded-lg bg-gray-50">
+          <div key={i} className="guest-section mb-8 p-4 border border-gray-200 rounded-lg bg-gray-50 shadow-md">
             <h2 className="text-xl font-bold mb-4">Guest {i + 1}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="flex flex-col">
@@ -270,7 +270,7 @@ const PersonalInfo = () => {
           noValidate
           className="w-full max-w-2xl mx-auto bg-white shadow-md rounded-lg p-6"
         >
-          <div className="mb-8 p-4 border border-gray-200 rounded-lg bg-gray-50">
+          <div className="mb-8 p-4 border border-gray-200 rounded-lg bg-gray-50 shadow-md">
             <h2 className="text-2xl font-bold mb-5">Personal Info</h2>
             <input type="hidden" name="type" value={type} />
             <input type="hidden" name="ticketAmount" value={ticketAmount} />

@@ -12,7 +12,7 @@ const Receipt = () => {
 
   return (
     <section className="w-full bg-white flex justify-center items-center py-10">
-      <div className="p-5 w-full max-w-lg bg-gray-50 shadow-md rounded-lg">
+      <div className="p-5 w-full max-w-lg border bg-gray-50 shadow-md rounded-lg">
         <h1 className="text-2xl font-bold mb-2">FooFestival</h1>
         <h2 className="text-xl mb-4">Receipt</h2>
         <p className="mb-4">Your order has been successfully completed</p>
