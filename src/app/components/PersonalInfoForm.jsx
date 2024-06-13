@@ -436,7 +436,7 @@ const PersonalInfo = () => {
                   Telephone:
                 </label>
                 <input
-                  type="text"
+                  type="telephone"
                   id="telephone"
                   {...register("telephone", {
                     required: "Telephone number is required",

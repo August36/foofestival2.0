@@ -54,9 +54,7 @@ const ReserveCamping = () => {
       if (response.ok) {
         const data = await response.json();
         setReservationId(data.id);
-        setReserveMessage("Reservation successful!");
-        console.log("Reservation ID:", data.id);
-
+        
         // Set search params and navigate to the next step
         const params = new URLSearchParams(searchParams);
         params.set("reservationId", data.id);
@@ -77,15 +75,15 @@ const ReserveCamping = () => {
     setCampingDivClicked(true);
     if (campingAreaSelected) {
       handlePutRequest();
+    } else {
+      setReserveMessage("Please select a camping area.");
     }
   };
 
   return (
     <div className="container mx-auto p-4">
-             
-
       <div className="p-3 bg-white rounded shadow-md">
-      <h1 className="text-2xl font-bold mb-6 mt-8">Reserve Camping</h1>
+        <h1 className="text-2xl font-bold mb-6 mt-8">Reserve Camping</h1>
         <h3 className="text-lg font-semibold mb-4">Choose camping area</h3>
         <FetchCampingSpots>
           {({ spots, error }) => (
@@ -118,28 +116,23 @@ const ReserveCamping = () => {
             </>
           )}
         </FetchCampingSpots>
-      
 
-      <div className="flex justify-center mt-6">
-        <button
-          onClick={handleClick}
-          className={`bg-green-500 text-white px-4 py-2 rounded-md ${
-            campingAreaSelected ? "cursor-pointer" : "opacity-50"
-          }`}
-          disabled={!campingAreaSelected}
-        >
-          Reserve camping
-        </button>
-      </div>
-      {reserveMessage && (
-        <div className="p-3 text-green-500 text-center mt-4">{reserveMessage}</div>
-      )}
-      {campingDivClicked && !campingAreaSelected && !reserveMessage && (
-        <div className="text-red-500 text-center mt-4">
-          Select a camping area before making a reservation
+        <div className="flex justify-center mt-6">
+          <button
+            onClick={handleClick}
+            className={`bg-blue-500 text-white py-2 px-4 rounded ${
+              campingAreaSelected ? "cursor-pointer" : "opacity-50 cursor-default"
+            }`}
+          >
+            Reserve camping
+          </button>
         </div>
-      )}
-    </div>
+        {reserveMessage && (
+          <div className={`p-3 text-center mt-4 ${reserveMessage === "Please select a camping area." ? "text-red-500" : ""}`}>
+            {reserveMessage}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
