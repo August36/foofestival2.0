@@ -16,8 +16,8 @@ const PersonalInfo = () => {
   const reservationId = searchParams.get("reservationId");
 
   const [guestInputs, setGuestInputs] = useState([]);
-  const [timeLeft, setTimeLeft] = useState(300000);
   const { register, control, formState: { errors }, trigger } = useForm();
+  const [timeLeft, setTimeLeft] = useState(parseInt(searchParams.get("timeLeft")));
 
   const updateTimeLeft = (newTimeLeft) => {
     setTimeLeft(newTimeLeft);

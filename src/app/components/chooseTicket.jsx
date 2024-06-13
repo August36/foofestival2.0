@@ -4,6 +4,7 @@ import TicketSelector from "./TicketSelector";
 import GreenCamping from "./GreenCamping";
 import TentAddOn from "./TentAddOn";
 import { useSearchParams } from "next/navigation";
+import Timer from "./Timer";
 
 const Chooseticket = ({ ticketType }) => {
   // Initialize search params
@@ -11,6 +12,13 @@ const Chooseticket = ({ ticketType }) => {
   const type = searchParams.get("type");
   const reservationId = searchParams.get("reservationId");
   const campingArea = searchParams.get("campingArea");
+
+  // Timer
+  const [timeLeft, setTimeLeft] = useState(300000);
+
+  const updateTimeLeft = (newTimeLeft) => {
+    setTimeLeft(newTimeLeft);
+  };
 
   // Prices
   const regularPrice = 799;
@@ -145,6 +153,8 @@ const Chooseticket = ({ ticketType }) => {
   };
 
   return (
+    <>
+    <Timer duration={timeLeft} onTimeUpdate={updateTimeLeft} />
     <form action="/personal-info" method="GET">
       {/* Hidden inputs to pass data to next page */}
       <input type="hidden" name="type" value={type} />
@@ -155,6 +165,7 @@ const Chooseticket = ({ ticketType }) => {
       <input type="hidden" name="isTent3Person" value={isTent3Person} />
       <input type="hidden" name="reservationId" value={reservationId} />
       <input type="hidden" name="campingArea" value={formData.campingArea} />
+      <input type="hidden" name="timeLeft" value={timeLeft} />
 
       {/* Ticket selection and pricing */}
       <article>
@@ -223,6 +234,7 @@ const Chooseticket = ({ ticketType }) => {
         </div>
       </article>
     </form>
+    </>
   );
 };
 
