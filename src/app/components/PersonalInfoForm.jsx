@@ -263,12 +263,11 @@ const PersonalInfo = () => {
   return (
     <>
       <Timer duration={timeLeft} onTimeUpdate={updateTimeLeft} />
-      <section className="w-full bg-gray-50 p-4 md:p-8">
+      <section className="w-full bg-white flex justify-center items-center py-10">
         <form
           // onSubmit={handleSubmit(onSubmit)}
           action="/payment"
           noValidate
-          className="w-full max-w-2xl mx-auto bg-white shadow-md rounded-lg p-6"
         >
           <div className="mb-8 p-4 border border-gray-200 rounded-lg bg-gray-50 shadow-md">
             <h2 className="text-2xl font-bold mb-5">Personal Info</h2>
