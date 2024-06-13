@@ -436,8 +436,9 @@ const PersonalInfo = () => {
                   Telephone:
                 </label>
                 <input
-                  type="telephone"
+                  type="tel"
                   id="telephone"
+                  maxLength={8}
                   {...register("telephone", {
                     required: "Telephone number is required",
                     pattern: {
