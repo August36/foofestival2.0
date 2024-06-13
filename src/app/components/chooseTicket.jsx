@@ -73,10 +73,10 @@ const Chooseticket = ({ ticketType }) => {
     }
     setTicketAmount((prevAmount) => {
       const newAmount = Math.max(prevAmount - 1, 0);
-      if (newAmount !== 2) {
+      if (newAmount > 2) {
         setIsTent2Person(false);
       }
-      if (newAmount !== 3) {
+      if (newAmount > 3) {
         setIsTent3Person(false);
       }
       return newAmount;
@@ -90,12 +90,12 @@ const Chooseticket = ({ ticketType }) => {
         setIsGreenCamping(isChecked);
         break;
       case "tent2Person":
-        if (ticketAmount === 2) {
+        if (ticketAmount >= 2) {
           setIsTent2Person(isChecked);
         }
         break;
       case "tent3Person":
-        if (ticketAmount === 3) {
+        if (ticketAmount >= 3) {
           setIsTent3Person(isChecked);
         }
         break;
@@ -108,14 +108,14 @@ const Chooseticket = ({ ticketType }) => {
   const handleCheckboxClick = (type) => {
     switch (type) {
       case "tent2Person":
-        if (ticketAmount !== 2) {
+        if (ticketAmount < 2) {
           setTentWarningMessage(
             "You need to purchase 2 tickets to select this option."
           );
         }
         break;
       case "tent3Person":
-        if (ticketAmount !== 3) {
+        if (ticketAmount < 3) {
           setTentWarningMessage(
             "You need to purchase 3 tickets to select this option."
           );
