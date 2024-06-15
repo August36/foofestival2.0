@@ -1,6 +1,6 @@
 // Vi importere useState og useEffect som er react hooks.
 // useState bruges til at deklarere og tracke states af de forskellige variabler
-// useEffect bruges til at udføre side-effecter. side-effekter kan fx data-fetching eller manuelt ændre DOM'en.
+// useEffect bruges til at udføre side-effekter. side-effekter kan fx data-fetching eller manuelt ændre DOM'en.
 import React, { useState, useEffect } from "react";
 import FetchCampingSpots from "./FetchCampingSpots";
 import { useSearchParams } from "next/navigation";
@@ -25,12 +25,12 @@ const ReserveCamping = () => {
   const searchParams = useSearchParams();
 
   // handleInputChange håndterer ændringer i inputfelterne i formen.
-  // Når en bruger interagerer med et inputfelt, kaldes handleInputChange med eventet som argument.
+  // Hvert inputfelt har en eventListener der lytter til "onChange" så når en bruger interagerer med et inputfelt, kaldes handleInputChange med eventet (det pågældende inputfelt) som argument.
   // Funktionen ekstraherer name og value fra eventet og opdaterer derefter formData ved at anvende ændringerne.
   // For eksempel, hvis brugeren interagerer med inputfeltet, der har name="campingArea",
-  // vil handleInputChange opdatere formData-objektet, så campingArea's værdi ikke længere er tom, men li med det område, som brugeren har valgt.
-  // setFormData opdaterer formData's tilstand ved at bruge en callback-funktion, der spreder den tidligere tilstand (prevData)
-  // og overskriver det specifikke 'name' med den nye value.
+  // vil handleInputChange opdatere formData-objektet, så campingArea's værdi ikke længere er tom, men lig med det område, som brugeren har valgt.
+  // setFormData opdaterer formData's tilstand ved at bruge en callback-funktion, der med spread operatoren ændrer den tidligere tilstand (prevData)
+  // og overskriver det specifikke name's value, med den nye value.
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({
@@ -38,7 +38,8 @@ const ReserveCamping = () => {
       [name]: value,
     }));
   };
-
+  // Spread operator (...) allows an iterable such as an array or a string to be expanded into seperate elements
+  // it "unpacks" each element in the iterable
   // Spread-operator skaber altid en ny kopi af datastrukturen (enten et array eller et objekt), hvilket tillader dig at tilføje eller ændre data uden at påvirke det oprindelige.
   // Den ændrer ikke det oprindelige array eller objekt, men snarere giver den dig en ny version af det, som du kan arbejde med.
 
@@ -50,21 +51,21 @@ const ReserveCamping = () => {
     setCampingAreaSelected(formData.campingArea !== "");
   }, [formData.campingArea]);
 
-    // Reserve-camping-button har en eventListener monteret som lytter efter 'clicks'. 
-    // Når knappen klikkes aktiveres handleClick funktionen. Den sætter setCampingDivClicked til true (ignorer div delen af navnet, den referer til knappen).
-    // Hvis et campingområde er valgt aktiveres funktionen "handlePutRequest", og hvis ikke, vises en warningmessage som fortæller brugeren at de skal vælge et område.
-    // Så handleClick bruges bare til at tjekke om brugeren har valgt et campingområde, før de forsøger at gå videre.
-    const handleClick = () => {
-      setCampingDivClicked(true);
-      if (campingAreaSelected) {
-        handlePutRequest();
-      } else {
-        setReserveMessage("Please select a camping area.");
-      }
-    };
+  // Reserve-camping-button har en eventListener monteret som lytter efter 'clicks'.
+  // Når knappen klikkes aktiveres handleClick funktionen. Den sætter setCampingDivClicked til true (ignorer div delen af navnet, den referer til knappen).
+  // Hvis et campingområde er valgt aktiveres funktionen "handlePutRequest", og hvis ikke, vises en warningmessage som fortæller brugeren at de skal vælge et område.
+  // Så handleClick bruges bare til at tjekke om brugeren har valgt et campingområde, før de forsøger at gå videre.
+  const handleClick = () => {
+    setCampingDivClicked(true);
+    if (campingAreaSelected) {
+      handlePutRequest();
+    } else {
+      setReserveMessage("Please select a camping area.");
+    }
+  };
 
   // PUT request for at reservere campingområde. En PUT request bruges til at sende eller opdatere data til en server.
-  
+
   // Igen kontrolleres der om et campingområde er valgt, før put requesten udføres. Dette sikrer at dataen kun sendes, hvis området er valgt.
   const handlePutRequest = async () => {
     if (!campingAreaSelected) {
@@ -73,7 +74,7 @@ const ReserveCamping = () => {
     }
 
     // Her oprettes reservationData-objektet, som indeholder dataen der skal sendes til serveren.
-    // I dette tilfælde består reservationData af to key-value pairs: det valgte område og mængden af billetter valgt 
+    // I dette tilfælde består reservationData af to key-value pairs: det valgte område og mængden af billetter valgt
     const reservationData = {
       area: formData.campingArea,
       amount: ticketAmount,
@@ -117,14 +118,12 @@ const ReserveCamping = () => {
     }
   };
 
-
-
   return (
     <div className="container mx-auto p-4">
       <div className="p-3 bg-white rounded shadow-md">
         <h1 className="text-2xl font-bold mb-6 mt-8">Reserve Camping</h1>
         <h3 className="text-lg font-semibold mb-4">Choose camping area</h3>
-        {/* Her bruges FetchCampingSpots som er en get request der henter et array af tilgængelige campingarea's fra /available-spots */}
+        {/* Her bruges FetchCampingSpots som er en get-request der henter et array af tilgængelige campingarea's fra /available-spots */}
         <FetchCampingSpots>
           {({ spots, error }) => (
             <>
@@ -164,7 +163,7 @@ const ReserveCamping = () => {
                     {/* object.values konverterer 'spot'-objektet til et array af dets værdier:
                     fx hvis spot er { area: "Nilfheim", spots: 200, avaiilable: 3 - bliver det til ["Nilfheim", 200, 3]
                       - Dette har jeg vidst gjort for at for at hvert 'spot' kun viser dens value, og ikke hele key-value pairet
-                       - så det er altså for at skilde mig af med teksen "area", "spots" og "available" - da jeg allerede har givet disse overskrifter i 4-column griddet } 
+                       - så det er altså for at skilde mig af med teksen "area", "spots" og "available" - da jeg allerede har givet disse overskrifter i 4-column griddet 
                     - Herefter bruges en span-container til at vise værdienerne fra det nyskabte 'spot' array.
                        */}
                     {Object.values(spot).map((value, i) => (
@@ -182,10 +181,10 @@ const ReserveCamping = () => {
         <div className="flex justify-center mt-6">
           <button
             onClick={handleClick}
-            // Her bruges en ternary operator der baseret på om campingAreaSelected er true eller false, tilføjer forskellige styles til knappen
-            // En ternary operator er ligesom et if statement - 
+            // Her bruges en ternary operator, der baseret på om campingAreaSelected er true eller false, tilføjer forskellige styles til knappen
+            // En ternary operator er ninjakode versionen af et if/else statement -
             // den tager tre operander: en condition som er efterfulgt af et ?,
-            // som er efterfulgt af en expression der eksekveres hvis conditionen er true, og til sidst en expression der eksekveres hvis conditionen er false. 
+            // som er efterfulgt af en expression der eksekveres hvis conditionen er true, og til sidst en expression der eksekveres hvis conditionen er false.
             className={`bg-blue-500 text-white py-2 px-4 rounded ${
               campingAreaSelected
                 ? "cursor-pointer"
