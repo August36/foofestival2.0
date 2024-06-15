@@ -7,20 +7,18 @@ import { useSearchParams } from "next/navigation";
 import Timer from "./Timer";
 
 const Chooseticket = ({ ticketType }) => {
-  // Initialize search params
+  // Vi henter query parametre fra forrige side via url'en
   const searchParams = useSearchParams();
   const type = searchParams.get("type");
   const reservationId = searchParams.get("reservationId");
   const campingArea = searchParams.get("campingArea");
 
-  // Timer
-  const [timeLeft, setTimeLeft] = useState(300000);
-
+  // Bruges til at holde styr på hvor meget tid der er tilbage af timeren.
   const updateTimeLeft = (newTimeLeft) => {
     setTimeLeft(newTimeLeft);
   };
 
-  // Prices
+  // Definerer priser
   const regularPrice = 799;
   const vipPrice = 1299;
   const bookingFee = 99;
@@ -35,11 +33,15 @@ const Chooseticket = ({ ticketType }) => {
   const [isTent3Person, setIsTent3Person] = useState(false);
   const [warningMessage, setWarningMessage] = useState("");
   const [tentWarningMessage, setTentWarningMessage] = useState("");
+  // Ved brug af OR operatoren sikrer vi at, hvis der ikke er valgt et campingarea, at der så returneres en tom string. Ved ikke om dette er nødvendigt da man ikke kan gå til denne side uden at have valgt en campingområde
   const [formData, setFormData] = useState({
     campingArea: campingArea || "",
   });
+  // timeLeft styrer nedtælling af timeren, start tallet er sat til 300000 millisekunder som er 5min.
+  const [timeLeft, setTimeLeft] = useState(300000);
 
-  // Calculate total price
+
+  // Her udregner vi totalPrice
   const calculateTotalPrice = () => {
     let totalPrice = 0;
 
@@ -56,15 +58,17 @@ const Chooseticket = ({ ticketType }) => {
     return totalPrice;
   };
 
-  // Handle ticket amount increment
+  // handleIncrement står for at øge antallet af billeter,
+  // kontrollerer at man max kan købe fem billeter,
+  // styrer state af setIsTent2Person og setIsTent3Person afhængigt af om newAmount er størrer end henholdsvis 2 eller 3. (Det er for at opfylde kravet om at man ikke må købe færrer end 2 eller 3 billeter og så vælge teltAddOn option)
   const handleIncrement = () => {
     if (ticketAmount < 5) {
       setTicketAmount((prevAmount) => {
         const newAmount = prevAmount + 1;
-        if (newAmount !== 2) {
+        if (newAmount < 2) {
           setIsTent2Person(false);
         }
-        if (newAmount !== 3) {
+        if (newAmount < 3) {
           setIsTent3Person(false);
         }
         return newAmount;
@@ -134,23 +138,15 @@ const Chooseticket = ({ ticketType }) => {
     }
   };
 
-  // Reset warning messages after 6 seconds
+  // Reset warning messages after 4 seconds
   useEffect(() => {
     const timer = setTimeout(() => {
       setWarningMessage("");
       setTentWarningMessage("");
-    }, 6000);
+    }, 4000);
 
     return () => clearTimeout(timer);
   }, [warningMessage, tentWarningMessage]);
-
-  // Handle next page click
-  const handleNextPageClick = (event) => {
-    if (!reservationId) {
-      event.preventDefault();
-      setWarningMessage("You must complete a reservation before proceeding.");
-    }
-  };
 
   return (
     <>
@@ -227,7 +223,6 @@ const Chooseticket = ({ ticketType }) => {
           <button
             type="submit"
             className="bg-blue-500 text-white py-2 px-4 rounded"
-            onClick={handleNextPageClick}
           >
             Next Page
           </button>
