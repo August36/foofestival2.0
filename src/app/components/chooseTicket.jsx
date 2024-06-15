@@ -5,6 +5,7 @@ import GreenCamping from "./GreenCamping";
 import TentAddOn from "./TentAddOn";
 import { useSearchParams } from "next/navigation";
 import Timer from "./Timer";
+import TimeIsOut from "./TimeIsOut"
 
 const Chooseticket = ({ ticketType }) => {
   // Vi henter query parametre fra forrige side via url'en
@@ -38,8 +39,15 @@ const Chooseticket = ({ ticketType }) => {
     campingArea: campingArea || "",
   });
   // timeLeft styrer nedtælling af timeren, start tallet er sat til 300000 millisekunder som er 5min.
-  const [timeLeft, setTimeLeft] = useState(300000);
-
+  const [timeLeft, setTimeLeft] = useState(10000);
+  // state for om timeren er løbet ud
+  const [timeOut, setTimeOut] = useState(false);
+  // Hvis timeLeft er 0 eller mindre, setTimeOut = true
+  useEffect(() => {
+    if (timeLeft <= 0) {
+      setTimeOut(true);
+    }
+  }, [timeLeft]);
 
   // Her udregner vi totalPrice
   const calculateTotalPrice = () => {
@@ -150,85 +158,102 @@ const Chooseticket = ({ ticketType }) => {
 
   return (
     <>
-    <Timer duration={timeLeft} onTimeUpdate={updateTimeLeft} />
-    <form action="/personal-info" method="GET">
-      {/* Hidden inputs to pass data to next page */}
-      <input type="hidden" name="type" value={type} />
-      <input type="hidden" name="ticketAmount" value={ticketAmount} />
-      <input type="hidden" name="totalPrice" value={calculateTotalPrice()} />
-      <input type="hidden" name="isGreenCamping" value={isGreenCamping} />
-      <input type="hidden" name="isTent2Person" value={isTent2Person} />
-      <input type="hidden" name="isTent3Person" value={isTent3Person} />
-      <input type="hidden" name="reservationId" value={reservationId} />
-      <input type="hidden" name="campingArea" value={formData.campingArea} />
-      <input type="hidden" name="timeLeft" value={timeLeft} />
-
-      {/* Ticket selection and pricing */}
-      <article>
-        <div className="flex justify-between bg-gray-100 rounded-lg p-3">
-          <div>
-            <TicketComponent2
-              title={ticketType === "Regular" ? "Regular ticket" : "VIP ticket"}
-              price={calculateTotalPrice()}
-            />
-          </div>
-          <TicketSelector
-            value={ticketAmount}
-            onIncrement={handleIncrement}
-            onDecrement={handleDecrement}
+      <Timer duration={timeLeft} onTimeUpdate={updateTimeLeft} />
+      {/* conditional rendering af hvad der vises i return statementet alt efter om tiden er løbet ud eller ej.
+    Hvis tiden er løbet ud fjernes det normale indhold og timeIsOut componenten vises i stedet.
+    */}
+      {timeOut ? (
+        <TimeIsOut />
+      ) : (
+        <form action="/personal-info" method="GET">
+          {/* Hidden inputs to pass data to next page */}
+          <input type="hidden" name="type" value={type} />
+          <input type="hidden" name="ticketAmount" value={ticketAmount} />
+          <input
+            type="hidden"
+            name="totalPrice"
+            value={calculateTotalPrice()}
           />
-        </div>
+          <input type="hidden" name="isGreenCamping" value={isGreenCamping} />
+          <input type="hidden" name="isTent2Person" value={isTent2Person} />
+          <input type="hidden" name="isTent3Person" value={isTent3Person} />
+          <input type="hidden" name="reservationId" value={reservationId} />
+          <input
+            type="hidden"
+            name="campingArea"
+            value={formData.campingArea}
+          />
+          <input type="hidden" name="timeLeft" value={timeLeft} />
 
-        {warningMessage && (
-          <div className="p-3 text-red-500">{warningMessage}</div>
-        )}
+          {/* Ticket selection and pricing */}
+          <article>
+            <div className="flex justify-between bg-gray-100 rounded-lg p-3">
+              <div>
+                <TicketComponent2
+                  title={
+                    ticketType === "Regular" ? "Regular ticket" : "VIP ticket"
+                  }
+                  price={calculateTotalPrice()}
+                />
+              </div>
+              <TicketSelector
+                value={ticketAmount}
+                onIncrement={handleIncrement}
+                onDecrement={handleDecrement}
+              />
+            </div>
 
-        {/* Add-ons for green camping and tents */}
-        <GreenCamping
-          title="Green camping"
-          description="Help save the planet"
-          description2="buy green camping for 249,-"
-          buy="Add"
-          checked={isGreenCamping}
-          onCheckboxChange={(isChecked) =>
-            handleCheckboxChange("greenCamping", isChecked)
-          }
-        />
+            {warningMessage && (
+              <div className="p-3 text-red-500">{warningMessage}</div>
+            )}
 
-        <TentAddOn
-          title="Tent set up"
-          description="Have a tent already set up for you"
-          description2="2 person tent: 299,-"
-          description3="3 person tent: 399,-"
-          buy2person="Buy tent for 2"
-          buy3person="Buy tent for 3"
-          checked2Person={isTent2Person}
-          checked3Person={isTent3Person}
-          onCheckboxClick2Person={() => handleCheckboxClick("tent2Person")}
-          onCheckboxClick3Person={() => handleCheckboxClick("tent3Person")}
-          onCheckboxChange2Person={(isChecked) =>
-            handleCheckboxChange("tent2Person", isChecked)
-          }
-          onCheckboxChange3Person={(isChecked) =>
-            handleCheckboxChange("tent3Person", isChecked)
-          }
-        />
+            {/* Add-ons for green camping and tents */}
+            <GreenCamping
+              title="Green camping"
+              description="Help save the planet"
+              description2="buy green camping for 249,-"
+              buy="Add"
+              checked={isGreenCamping}
+              onCheckboxChange={(isChecked) =>
+                handleCheckboxChange("greenCamping", isChecked)
+              }
+            />
 
-        {tentWarningMessage && (
-          <div className="p-3 text-red-500">{tentWarningMessage}</div>
-        )}
+            <TentAddOn
+              title="Tent set up"
+              description="Have a tent already set up for you"
+              description2="2 person tent: 299,-"
+              description3="3 person tent: 399,-"
+              buy2person="Buy tent for 2"
+              buy3person="Buy tent for 3"
+              checked2Person={isTent2Person}
+              checked3Person={isTent3Person}
+              onCheckboxClick2Person={() => handleCheckboxClick("tent2Person")}
+              onCheckboxClick3Person={() => handleCheckboxClick("tent3Person")}
+              onCheckboxChange2Person={(isChecked) =>
+                handleCheckboxChange("tent2Person", isChecked)
+              }
+              onCheckboxChange3Person={(isChecked) =>
+                handleCheckboxChange("tent3Person", isChecked)
+              }
+            />
 
-        {/* Navigation to the next page */}
-        <div className="flex flex-col items-center p-3 mb-8">
-          <button
-            type="submit"
-            className="bg-blue-500 text-white py-2 px-4 rounded"
-          >
-            Next Page
-          </button>
-        </div>
-      </article>
-    </form>
+            {tentWarningMessage && (
+              <div className="p-3 text-red-500">{tentWarningMessage}</div>
+            )}
+
+            {/* Navigation to the next page */}
+            <div className="flex flex-col items-center p-3 mb-8">
+              <button
+                type="submit"
+                className="bg-blue-500 text-white py-2 px-4 rounded"
+              >
+                Next Page
+              </button>
+            </div>
+          </article>
+        </form>
+      )}
     </>
   );
 };

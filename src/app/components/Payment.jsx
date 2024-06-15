@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSearchParams } from "next/navigation";
 import Timer from "./Timer";
+import TimeIsOut from "./TimeIsOut";
 
 const Payment = () => {
   const searchParams = useSearchParams();
@@ -23,11 +24,21 @@ const Payment = () => {
   const country = searchParams.get("country");
   const telephone = searchParams.get("telephone");
   const email = searchParams.get("email");
+
   const [timeLeft, setTimeLeft] = useState(parseInt(searchParams.get("timeLeft")));
+  const [timeOut, setTimeOut] = useState(false);
+
 
   const updateTimeLeft = (newTimeLeft) => {
     setTimeLeft(newTimeLeft);
   };
+
+  // Hvis timeLeft er 0 eller mindre, setTimeOut = true
+  useEffect(() => {
+    if (timeLeft <= 0) {
+      setTimeOut(true);
+    }
+  }, [timeLeft]);
 
   const guestNames = [];
   for (let i = 0; i < ticketAmount - 1; i++) {
@@ -106,6 +117,9 @@ const Payment = () => {
     <>
       <Timer duration={timeLeft} onTimeUpdate={updateTimeLeft} />
       <section className="w-full bg-white flex justify-center items-center py-10">
+      {timeOut ? (
+        <TimeIsOut />
+      ) : (
         <form
           onSubmit={handleSubmit(onSubmit)}
           action="/reciept"
@@ -250,6 +264,7 @@ const Payment = () => {
             </button>
           </div>
         </form>
+        )}
       </section>
     </>
   );
