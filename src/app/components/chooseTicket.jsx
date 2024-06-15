@@ -39,7 +39,7 @@ const Chooseticket = ({ ticketType }) => {
     campingArea: campingArea || "",
   });
   // timeLeft styrer nedtælling af timeren, start tallet er sat til 300000 millisekunder som er 5min.
-  const [timeLeft, setTimeLeft] = useState(10000);
+  const [timeLeft, setTimeLeft] = useState(300000);
   // state for om timeren er løbet ud
   const [timeOut, setTimeOut] = useState(false);
   // Hvis timeLeft er 0 eller mindre, setTimeOut = true
