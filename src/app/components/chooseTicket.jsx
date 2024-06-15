@@ -158,6 +158,7 @@ const Chooseticket = ({ ticketType }) => {
 
   return (
     <>
+    
       <Timer duration={timeLeft} onTimeUpdate={updateTimeLeft} />
       {/* conditional rendering af hvad der vises i return statementet alt efter om tiden er løbet ud eller ej.
     Hvis tiden er løbet ud fjernes det normale indhold og timeIsOut componenten vises i stedet.
@@ -165,6 +166,10 @@ const Chooseticket = ({ ticketType }) => {
       {timeOut ? (
         <TimeIsOut />
       ) : (
+        <>
+        <h3 className="pt-2 pl-2">
+        <strong>Choose tickets</strong>
+      </h3>
         <form action="/personal-info" method="GET">
           {/* Hidden inputs to pass data to next page */}
           <input type="hidden" name="type" value={type} />
@@ -187,7 +192,7 @@ const Chooseticket = ({ ticketType }) => {
 
           {/* Ticket selection and pricing */}
           <article>
-            <div className="flex justify-between bg-gray-100 rounded-lg p-3">
+            <div className="flex justify-between bg-gray-100 p-3">
               <div>
                 <TicketComponent2
                   title={
@@ -253,6 +258,7 @@ const Chooseticket = ({ ticketType }) => {
             </div>
           </article>
         </form>
+        </>
       )}
     </>
   );

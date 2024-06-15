@@ -28,7 +28,7 @@ const Timer = ({ duration, onTimeUpdate }) => {
   const seconds = Math.floor((timeLeft / 1000) % 60);
 
   return (
-    <div className="flex flex-col bg-black text-white p-4 rounded">
+    <div className="flex flex-col bg-black text-white p-4">
       <span className="text-gray-400">Time left to complete order &nbsp;</span>
       {timesUp ? (
         <span className="text-red-500 text-4xl">You failed to order in time</span>

@@ -15,11 +15,6 @@ const TicketHeader = ({ ticketType }) => {
           <strong>FooFestival 2024</strong> - {ticketType} Ticket
         </h4>
       </div>
-      <div className="w-full bg-[hsla(232,6%,0%,1)] text-white">
-        <p className="text-sm">
-          Each purchase includes an additional one-time fee of 99,-
-        </p>
-      </div>
     </>
   );
 };
