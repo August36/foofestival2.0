@@ -184,7 +184,7 @@ const ReserveCamping = () => {
             // Her bruges en ternary operator, der baseret på om campingAreaSelected er true eller false, tilføjer forskellige styles til knappen
             // En ternary operator er ninjakode versionen af et if/else statement -
             // den tager tre operander: en condition som er efterfulgt af et ?,
-            // som er efterfulgt af en expression der eksekveres hvis conditionen er true, og til sidst en expression der eksekveres hvis conditionen er false.
+            // som er efterfulgt af en expression der eksekveres hvis conditionen er truthy, og til sidst en expression der eksekveres hvis conditionen er falsy.
             className={`bg-blue-500 text-white py-2 px-4 rounded ${
               campingAreaSelected
                 ? "cursor-pointer"

@@ -16,7 +16,7 @@ const FetchCampingSpots = ({ children }) => {
           throw new Error("Failed to fetch available spots");
         }
         const data = await response.json();
-        // Filtrer spots med available=0 fra
+        // Filter-method bruges tilat frasortere spots med available=0.
         const filteredSpots = data.filter((spot) => spot.available !== 0);
         setSpots(filteredSpots);
       } catch (error) {
