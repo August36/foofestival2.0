@@ -11,6 +11,7 @@ import {
   Link,
   Button,
 } from "@nextui-org/react";
+import styles from "./NavBars.module.css";
 
 export default function SmallNav() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -18,9 +19,7 @@ export default function SmallNav() {
   const menuItems = [
     { label: "Bands", href: "/festival" },
     { label: "Schedule", href: "/stages" },
-
     { label: "Map", href: "/map" },
-
     { label: "Buy Ticket", href: "/ticket-frontpage" },
     { label: "", href: "" },
     { label: "Favorites", href: "/favorites" },
@@ -52,19 +51,27 @@ export default function SmallNav() {
           <p className="font-bold text-inherit">FooFest</p>
         </NavbarBrand>
         <NavbarItem>
-          <Link color="foreground" href="/festival">
+          <Link
+            className={styles.navbarlink}
+            color="foreground"
+            href="/festival"
+          >
             Bands
           </Link>
         </NavbarItem>
 
         <NavbarItem isActive>
-          <Link href="/stages" aria-current="page">
+          <Link
+            className={styles.navbarlink}
+            href="/stages"
+            aria-current="page"
+          >
             Schedule
           </Link>
         </NavbarItem>
 
         <NavbarItem>
-          <Link color="foreground" href="/map">
+          <Link className={styles.navbarlink} color="foreground" href="/map">
             Map
           </Link>
         </NavbarItem>
@@ -72,7 +79,9 @@ export default function SmallNav() {
 
       <NavbarContent justify="end">
         <NavbarItem className="hidden lg:flex">
-          <Link href="favorites">Favorites</Link>
+          <Link className={styles.navbarlink} href="favorites">
+            Favorites
+          </Link>
         </NavbarItem>
         <NavbarItem>
           <Button
@@ -89,7 +98,7 @@ export default function SmallNav() {
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item.label}-${index}`}>
             <Link
-              className="w-full"
+              className={`w-full ${styles.navbarlink}`}
               color={
                 index === 2
                   ? "warning"

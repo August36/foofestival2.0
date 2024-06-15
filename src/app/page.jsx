@@ -112,6 +112,13 @@ export default function App() {
               />
             </Link>
           </div>
+          <div>
+            <h4>A ONE WEEK 24/7 FESTIVAL OF YOUR FAVORITE ARTISTS</h4>
+            <p>
+              From <span>Monday 24th June</span> to{" "}
+              <span>Sunday 30th of June</span>
+            </p>
+          </div>
           <Link href="/ticket-frontpage" className={styles.buttonLink}>
             Tickets
           </Link>
@@ -126,7 +133,8 @@ export default function App() {
         </div>
       </div>
       <div className={styles.otherBackground}>
-        <h2>Oplev dine favoritkunstnere</h2>
+        <h2>Experience your favorite artists</h2>
+        <h3>From the 60's, 70's, 80's and 90's</h3>
         <p className={styles.otherP}>
           (Some of them are apparently back from the grave)
         </p>
