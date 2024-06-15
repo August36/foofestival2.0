@@ -8,7 +8,6 @@ const FetchCampingSpots = ({ children }) => {
   useEffect(() => {
     const fetchCampingSpots = async () => {
       try {
-        // "http://free-simple-babcat.glitch.me/available-spots"
         // "http://localhost:8080/available-spots"
         //  "https://abyssinian-aeolian-gazelle.glitch.me/available-spots"
 
