@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "SuperDream";
+  src: url("/fonts/SuperDream.ttf") format("truetype");
+}
+
 .pageContainer {
   display: flex;
   flex-direction: column;
@@ -8,6 +13,7 @@
 }
 
 .h1 {
+  font-family: "SuperDream";
   color: rgb(227, 232, 238);
   margin-bottom: 20px;
   margin-top: 60px;
