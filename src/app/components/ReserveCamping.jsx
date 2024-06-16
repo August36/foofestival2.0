@@ -73,7 +73,7 @@ const ReserveCamping = () => {
       return;
     }
 
-    // Her oprettes reservationData-objektet, som indeholder dataen der skal sendes til serveren.
+    // Her oprettes reservationData-objektet, som indeholder dataen der senere skal sendes tilbage serveren.
     // I dette tilfælde består reservationData af to key-value pairs: det valgte område og mængden af billetter valgt
     const reservationData = {
       area: formData.campingArea,
