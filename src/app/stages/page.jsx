@@ -46,7 +46,7 @@ export default function SchedulePage() {
           : { filter: "grayscale(100%)" };
     }
     setStageStyles(updatedStyles);
-  }, [selectedStage]);
+  }, [selectedStage, stageStyles]);
 
   function formatScheduleData(data) {
     const formattedData = {};

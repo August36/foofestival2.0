@@ -503,7 +503,7 @@
     position: relative;
   }
 
-  .otherBackground .otherP:nth-child(2) ::after {
+  .otherBackground .otherP:nth-child(2)::after {
     content: "";
     position: absolute;
     bottom: -0px;
