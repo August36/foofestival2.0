@@ -170,7 +170,7 @@
 .bandName {
   margin: 0;
   padding: 0;
-  color: #50c0ac;
+  color: #0077cc;
   text-align: center;
   font-size: 16px;
   background-color: yellow;
@@ -275,7 +275,7 @@
   transform: translate(-50%, -50%);
   margin: 0;
   padding: 0;
-  color: #50c0ac;
+  color: #0077cc;
   text-align: center;
   font-size: 16px;
   border: 2px solid black;
