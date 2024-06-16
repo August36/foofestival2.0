@@ -80,7 +80,7 @@ const Payment = () => {
 
 
     // Navigation til næste side og sender queryParams i url'en
-    // window.location.href = `/receipt?${queryParams}`;
+    window.location.href = `/receipt?${queryParams}`;
   };
   
 
