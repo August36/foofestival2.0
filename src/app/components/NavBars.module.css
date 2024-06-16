@@ -1,0 +1,8 @@
+.navbarlink {
+  color: blue !important;
+  font-weight: 600;
+}
+
+.navbarlink:hover {
+  color: darkblue !important;
+}

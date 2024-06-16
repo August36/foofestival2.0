@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "SuperDream";
+  src: url("/fonts/SuperDream.ttf") format("truetype");
+}
+
 .main {
   background-color: rgb(214, 174, 121);
   color: aliceblue;
@@ -15,8 +20,10 @@
 }
 
 .mainBand h1 {
-  color: rgb(227, 232, 238);
-  margin-bottom: -40px;
+  font-family: "SuperDream";
+  margin-top: -40px;
+  color: #e3e8ee;
+  margin-bottom: 10px;
   position: relative;
 }
 
@@ -32,6 +39,7 @@
 }
 
 .grid {
+  margin-top: -80px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
@@ -109,6 +117,7 @@
     gap: 20px;
     max-width: 100%;
     width: var(--max-width);
+    margin-top: -0px;
   }
 
   .mainBand h1 {

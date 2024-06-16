@@ -74,7 +74,6 @@ const CurrentPlaying = () => {
 
   return (
     <div className={styles.currentPlaying}>
-      <h4>Who is playing right now?</h4>
       <div className={styles.currentTime}>Current Time: {currentTime}</div>
       <div className={styles.timeSlot}>
         {currentTimeSlot.start} - {currentTimeSlot.end}

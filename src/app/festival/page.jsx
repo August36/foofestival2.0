@@ -160,7 +160,6 @@ export default function FestivalPage() {
                     height={200}
                   />
                   <h5 className={styles.bandName}>{band.name}</h5>
-                  <p>{getStageForBand(band.name)}</p>
                 </Link>
               </motion.div>
             </motion.li>

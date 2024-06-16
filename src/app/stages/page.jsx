@@ -125,7 +125,7 @@ export default function SchedulePage() {
   return (
     <main>
       <div className={styles.mainBand}>
-        <h1 className="ml-4">Schedule</h1>
+        <h1 className={styles.h1}>Schedule</h1>
         <div className={styles.imageStages}>
           <div className={styles.imageContainer}>
             <motion.div
@@ -133,7 +133,7 @@ export default function SchedulePage() {
               style={{ pointerEvents: "auto", ...stageStyles.Jotunheim }}
               onClick={() => handleStageSelect("Jotunheim")}
             >
-              <p>Jotunheim</p>
+              <p className={styles.p}>Jotunheim</p>
               <Image
                 src="/stage3.png"
                 alt="Jotunheim"
@@ -148,7 +148,7 @@ export default function SchedulePage() {
               style={{ pointerEvents: "auto", ...stageStyles.Vanaheim }}
               onClick={() => handleStageSelect("Vanaheim")}
             >
-              <p>Vanaheim</p>
+              <p className={styles.p}>Vanaheim</p>
               <Image
                 src="/stage2.png"
                 alt="Vanaheim"
@@ -163,7 +163,7 @@ export default function SchedulePage() {
               style={{ pointerEvents: "auto", ...stageStyles.Midgard }}
               onClick={() => handleStageSelect("Midgard")}
             >
-              <p>Midgard</p>
+              <p className={styles.p}>Midgard</p>
               <Image src="/stage1.png" alt="Midgard" width={200} height={200} />
             </motion.div>
           </div>
