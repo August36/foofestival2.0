@@ -127,7 +127,7 @@ export default function App() {
       <div className={styles.otherBackground}>
         <div className={styles.festivalinfo}>
           <h4>
-            A ONE WEEK <span>24/7</span> FESTIVAL WITH YOUR FAVORITE ARTISTS
+            AN AMAZING ONE WEEK <span>24/7</span> FESTIVAL
           </h4>
           <p>
             From <span>Monday 24th June</span> to{" "}
