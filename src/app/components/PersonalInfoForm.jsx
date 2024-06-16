@@ -382,7 +382,8 @@ const PersonalInfo = () => {
                 Day:
               </label>
               <input
-                type="number"
+                type="text"
+                maxLength={2}
                 id="day"
                 {...register("day", {
                   required: "Day is required",

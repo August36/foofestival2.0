@@ -58,7 +58,7 @@ const Payment = () => {
     };
     try {
       await fetch(fulfillEndpoint, {
-        method: "PUT",
+        method: "POST",
         headers: headersList,
         body: JSON.stringify({ reservationId: data.reservationId }),
       });
@@ -80,7 +80,7 @@ const Payment = () => {
 
 
     // Navigation til næste side og sender queryParams i url'en
-    window.location.href = `/receipt?${queryParams}`;
+    // window.location.href = `/receipt?${queryParams}`;
   };
   
 
