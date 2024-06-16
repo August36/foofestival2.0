@@ -112,18 +112,9 @@ export default function App() {
               />
             </Link>
           </div>
-          <div>
-            <h4>A ONE WEEK 24/7 FESTIVAL OF YOUR FAVORITE ARTISTS</h4>
-            <p>
-              From <span>Monday 24th June</span> to{" "}
-              <span>Sunday 30th of June</span>
-            </p>
-          </div>
+
           <Link href="/ticket-frontpage" className={styles.buttonLink}>
             Tickets
-          </Link>
-          <Link href="/festival" className={styles.buttonLink2}>
-            Bands
           </Link>
         </div>
       </div>
@@ -132,9 +123,19 @@ export default function App() {
           <ParallaxText />
         </div>
       </div>
+
       <div className={styles.otherBackground}>
-        <h2>Experience your favorite artists</h2>
-        <h3>From the 60's, 70's, 80's and 90's</h3>
+        <div className={styles.festivalinfo}>
+          <h4>
+            A ONE WEEK <span>24/7</span> FESTIVAL WITH YOUR FAVORITE ARTISTS
+          </h4>
+          <p>
+            From <span>Monday 24th June</span> to{" "}
+            <span>Sunday 30th of June</span>
+          </p>
+        </div>
+        <h2 className={styles.h2}>Experience your favorite artists</h2>
+        <h3 className={styles.fromThe}>From the 60's, 70's, 80's and 90's</h3>
         <p className={styles.otherP}>
           (Some of them are apparently back from the grave)
         </p>
@@ -173,15 +174,22 @@ export default function App() {
             </motion.li>
           ))}
         </div>
+        <p className={styles.otherP}></p>
+        <Link href="/festival" className={styles.buttonLink2}>
+          ALL BANDS
+        </Link>
       </div>
 
       <div className={styles.bottom} ref={bottomRef}>
+        <div>
+          <h3 className={styles.h3}>Who is playing right now?</h3>
+        </div>
         <CurrentPlaying />
         <div className={styles.bottomButtons}>
           <Link href="/stages" className={styles.buttonLink}>
             Full Schedule
           </Link>
-          <Link href="/map" className={styles.buttonLink2}>
+          <Link href="/map" className={styles.buttonLink3}>
             Map
           </Link>
           {/*<div className={styles.eventsContainer}>

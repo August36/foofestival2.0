@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "SuperDream";
+  src: url("/fonts/SuperDream.ttf") format("truetype");
+
+  font-weight: normal;
+  font-style: normal;
+}
+
 .mainBand {
   display: flex;
   flex-direction: column;
@@ -6,7 +14,30 @@
   padding: 4rem;
   min-height: 100vh;
   text-align: center;
-  background: #f08018;
+  background-color: #f5f5f5;
+}
+
+.h1 {
+  font-family: "SuperDream";
+  color: #005bb5;
+  margin-bottom: 20px;
+  margin-top: 60px;
+  position: relative;
+}
+
+.h1::after {
+  content: "";
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  width: 220px;
+  height: 2px;
+  background-color: #005bb5;
+  transform: translateX(-50%);
+}
+
+.p {
+  color: rgb(226, 69, 12);
 }
 
 .scheduleContainer {
@@ -26,6 +57,23 @@
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
+}
+
+.scheduleDay h3,
+.scheduleDay h2 {
+  text-align: center;
+  margin: 0;
+  padding: 0.5rem 0;
+}
+
+.scheduleDay h3 {
+  font-size: 2rem;
+  color: #007acc;
+}
+
+.scheduleDay h2 {
+  font-size: 1.5rem;
+  color: #555;
 }
 
 .scheduleList {
@@ -74,7 +122,7 @@
   gap: 10px;
   padding: 10px 0;
   border-top: 1px solid #ccc;
-  color: rgb(233, 92, 41);
+  color: rgb(226, 69, 12);
 }
 
 .breakItem span {
@@ -149,7 +197,7 @@
   margin: 20px;
   font-size: 16px;
 
-  border: rgb(233, 92, 41) 2px solid;
+  border: rgb(226, 69, 12) 2px solid;
   border-radius: 4px;
   text-align: center;
   text-decoration: none;
