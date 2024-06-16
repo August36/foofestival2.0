@@ -17,7 +17,7 @@ const PersonalInfo = () => {
   const reservationId = searchParams.get("reservationId");
 
   const [guestInputs, setGuestInputs] = useState([]);
-  const { register, control, formState: { errors }, trigger } = useForm();
+  const { register, control, formState: { errors }, handleSubmit, trigger } = useForm();
   const [timeLeft, setTimeLeft] = useState(parseInt(searchParams.get("timeLeft")));
   const updateTimeLeft = (newTimeLeft) => {
     setTimeLeft(newTimeLeft);
@@ -251,9 +251,6 @@ const PersonalInfo = () => {
                 />
                 <p className="text-red-500 m-2">{errors.email?.message}</p>
               </div>
-
-
-
             </div>
           </div>
         );
@@ -264,9 +261,22 @@ const PersonalInfo = () => {
 
   const normalizePhoneNumber = (value) => value.replace(/[\s-]/g, "");
 
-  // const onSubmit = (data) => {
-  //   console.log(data);
-  // };
+  const onSubmit = (data) => {
+    console.log(data);
+
+    const queryParams = new URLSearchParams({
+      type,
+      ticketAmount: ticketAmount.toString(),
+      totalPrice: totalPrice.toString(),
+      isGreenCamping: isGreenCamping.toString(),
+      isTent2Person: isTent2Person.toString(),
+      isTent3Person: isTent3Person.toString(),
+      timeLeft: timeLeft.toString(),
+      reservationId,
+    }).toString();
+
+    window.location.href = `/payment?${queryParams}`;
+  };
 
   return (
     <>
@@ -280,9 +290,8 @@ const PersonalInfo = () => {
       ) : (
         <>
       <form
-        // onSubmit={handleSubmit(onSubmit)}
-        action="/payment"
-        noValidate
+        onSubmit={handleSubmit(onSubmit)}
+        // action="/payment"
       >
         <div className="mb-8 p-4 border border-gray-200 rounded-lg bg-gray-50 shadow-md">
           <h2 className="text-2xl font-bold mb-5">Personal Info</h2>
@@ -307,6 +316,8 @@ const PersonalInfo = () => {
                   required: "First Name is required",
                 })}
                 className="border border-gray-300 rounded-md mb-3 p-2"
+                // onBlur - hvis der klikkes væk fra et inputfelt uden godkendt validation
+                // - Hvis warningMessage
                 onBlur={() => trigger("firstname")}
               />
               <p className="text-red-500 m-2">{errors.firstname?.message}</p>
