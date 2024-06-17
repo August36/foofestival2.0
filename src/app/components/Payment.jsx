@@ -82,6 +82,18 @@ const Payment = () => {
     // Navigation til næste side og sender queryParams i url'en
     window.location.href = `/receipt?${queryParams}`;
   };
+
+  // Hvis brugeren skriver bogstaver i et input-felt til tal, erstattes tallene til en tom string.
+  const handleInput = (event) => {
+    const { value } = event.target;
+    event.target.value = value.replace(/[^a-zA-Z\s]/g, '')
+  };
+
+  // Hvis brugeren skriver tal i et input-felt til bogstaver, erstattes tallene til en tom string.
+  const handleNumberInput = (event) => {
+    const { value } = event.target;
+    event.target.value = value.replace(/\D/g, '')
+  };
   
 
   return (
@@ -137,7 +149,9 @@ const Payment = () => {
               id="cardName"
               {...register("cardName", {
                 required: { value: true, message: "Name on card is required" },
+                pattern: { value: /^[A-Za-z\s]+$/, message: "Only letters are allowed" }
               })}
+              onInput={handleInput}
               onBlur={() => trigger("cardName")}
               className="border border-gray-300 rounded-md mb-3 p-2"
             />
@@ -157,6 +171,7 @@ const Payment = () => {
                   message: "Card number must be 16 digits",
                 },
               })}
+              onInput={handleNumberInput}
               onBlur={() => trigger("cardNumber")}
               className="border border-gray-300 rounded-md mb-3 p-2"
             />
@@ -212,7 +227,7 @@ const Payment = () => {
             <input
               type="text"
               id="cvv"
-              maxLength={3}
+              maxLength={4}
               {...register("cvv", {
                 required: { value: true, message: "CVV is required" },
                 pattern: {
@@ -220,6 +235,7 @@ const Payment = () => {
                   message: "CVV must be 3 or 4 digits",
                 },
               })}
+              onInput={handleNumberInput}
               onBlur={() => trigger("cvv")}
               className="border border-gray-300 rounded-md mb-3 p-2"
             />
