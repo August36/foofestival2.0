@@ -72,11 +72,12 @@
 }
 
 .spots h3 {
-  margin-top: 20px;
+  margin-top: 30px;
   color: #211f80;
   margin-bottom: 20px;
   font-size: 1.4rem;
   position: relative;
+  font-weight: 800;
 }
 
 .spots h3::after {
@@ -92,6 +93,7 @@
 }
 .bottomP {
   margin-bottom: 60px;
+  font-weight: 600;
 }
 
 .bottomP span {

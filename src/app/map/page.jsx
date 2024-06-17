@@ -12,7 +12,7 @@ const Page = () => {
   const [windowWidth, setWindowWidth] = useState(undefined);
 
   const largeScreenMarkers = {
-    FoodStalls: [51.523, -0.156],
+    FoodStalls: [51.5235, -0.156],
     Exit: [51.52645, -0.1475],
     Midgard: [51.524, -0.135],
     Vanaheim: [51.5194, -0.143],
@@ -125,7 +125,7 @@ const Page = () => {
           color: spot === "FoodStalls" ? "red" : "blue",
           fillColor: spot === "FoodStalls" ? "#f03" : "#03f",
           fillOpacity: 0.5,
-          radius: 50,
+          radius: 150,
         }).addTo(map);
       } else {
         if (circleRef.current) {
