@@ -108,7 +108,7 @@ const Payment = () => {
           // action="/reciept"
           className="p-5 w-full max-w-lg border bg-gray-50 shadow-md rounded-lg"
         >
-          <h2 className="text-2xl font-bold mb-5">Payment Information</h2>
+          <h2 className="text-2xl font-bold mb-5">Payment</h2>
 
           <input type="hidden" {...register("type")} defaultValue={type} />
           <input type="hidden" {...register("ticketAmount")} defaultValue={ticketAmount} />

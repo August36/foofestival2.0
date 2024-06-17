@@ -263,7 +263,7 @@ const PersonalInfo = () => {
 
   const normalizePhoneNumber = (value) => value.replace(/[\s-]/g, "");
 
-  const onSubmit =  async (data) => {
+  const onSubmit = (data) => {
     console.log(data);
 
     //POST-request til supabase
