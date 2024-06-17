@@ -264,6 +264,7 @@ const PersonalInfo = () => {
   const normalizePhoneNumber = (value) => value.replace(/[\s-]/g, "");
 
   const onSubmit = (data) => {
+    //tilføj 'async' før (data) hvis post-request skal aktiveres
     console.log(data);
 
     //POST-request til supabase
