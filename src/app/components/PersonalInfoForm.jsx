@@ -7,6 +7,7 @@ import Timer from "./Timer";
 import TimeIsOut from "./TimeIsOut";
 
 const PersonalInfo = () => {
+  // Data fra URL'en hentes
   const searchParams = useSearchParams();
   const type = searchParams.get("type");
   const ticketAmount = parseInt(searchParams.get("ticketAmount"));
@@ -76,7 +77,8 @@ const PersonalInfo = () => {
                   Day:
                 </label>
                 <input
-                  type="number"
+                  type="text"
+                  maxLength={2}
                   id={`guest${i + 1}day`}
                   {...register(`guest${i + 1}day`, {
                     required: `Guest ${i + 1} Day is required`,
@@ -266,39 +268,39 @@ const PersonalInfo = () => {
 
     //POST-request til supabase
 
-    const endpoint = "https://yehhhdwxrekwnvfpdaxf.supabase.co/rest/v1/foofest2";
-    const apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InllaGhoZHd4cmVrd252ZnBkYXhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTY1NDY1NTYsImV4cCI6MjAzMjEyMjU1Nn0.LMM7xRAUn2moW9TM8A5jQSuZtpFfc6RXk0k0KHngu-Q";
+    // const endpoint = "https://yehhhdwxrekwnvfpdaxf.supabase.co/rest/v1/foofest2";
+    // const apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InllaGhoZHd4cmVrd252ZnBkYXhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTY1NDY1NTYsImV4cCI6MjAzMjEyMjU1Nn0.LMM7xRAUn2moW9TM8A5jQSuZtpFfc6RXk0k0KHngu-Q";
 
-    const headersList = {
-      "Content-Type": "application/json",
-      apikey: apiKey,
-      Authorization: `Bearer ${apiKey}`,
-    };
+    // const headersList = {
+    //   "Content-Type": "application/json",
+    //   apikey: apiKey,
+    //   Authorization: `Bearer ${apiKey}`,
+    // };
 
-    const bodyContent = JSON.stringify(data);
+    // const bodyContent = JSON.stringify(data);
 
-    try {
-      const response = await fetch(endpoint, {
-        method: "POST",
-        headers: headersList,
-        body: bodyContent,
-      });
+    // try {
+    //   const response = await fetch(endpoint, {
+    //     method: "POST",
+    //     headers: headersList,
+    //     body: bodyContent,
+    //   });
 
-      const responseText = await response.text();
-      if (!response.ok) {
-        throw new Error(`Network response was not ok: ${responseText}`);
-      }
+    //   const responseText = await response.text();
+    //   if (!response.ok) {
+    //     throw new Error(`Network response was not ok: ${responseText}`);
+    //   }
 
-      if (responseText) {
-        try {
-          const result = JSON.parse(responseText);
-          console.log("Data submitted successfully", result);
-        } catch {
-          throw new Error(`Failed to parse JSON response: ${responseText}`);
-        }
-      } else {
-        console.log("Data submitted successfully, but no response body");
-      }
+    //   if (responseText) {
+    //     try {
+    //       const result = JSON.parse(responseText);
+    //       console.log("Data submitted successfully", result);
+    //     } catch {
+    //       throw new Error(`Failed to parse JSON response: ${responseText}`);
+    //     }
+    //   } else {
+    //     console.log("Data submitted successfully, but no response body");
+    //   }
 
     //Her samles det data der skal sendes til payment i en variabel
     const queryParams = new URLSearchParams({
@@ -315,11 +317,12 @@ const PersonalInfo = () => {
     // Navigation til næste side og sender queryParams i url'en
     window.location.href = `/payment?${queryParams}`;
 
-    console.log("Reservation fulfilled successfully");
-  } catch (error) {
-    console.error("Error submitting data:", error);
-  }
-  };
+    // console.log("Reservation fulfilled successfully");
+  } 
+  // catch (error) {
+    // console.error("Error submitting data:", error);
+  // }
+  // };
 
   return (
     <>
